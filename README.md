@@ -1,11 +1,11 @@
-##Antivirus project
+## Antivirus project
 
-###Instruments:
+### Instruments:
 
 cmake minimum version 3.16  
 python3  
 
-###Start instructions:
+### Start instructions:
 
 for linux:
 ````
