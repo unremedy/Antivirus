@@ -4,11 +4,9 @@ void Scanning::ScanningDirectory(int argc, char **argv) {
     if (argc == 2) {
         std::filesystem::path EnteredPath(argv[1]);
         if (std::filesystem::exists(EnteredPath)) {
-            if(is_regular_file(EnteredPath)){
+            if (is_regular_file(EnteredPath)) {
                 WorkingWithFile(EnteredPath);
-//                std::cout << "file";
-            }
-            else if(is_directory(EnteredPath)) {
+            } else if (is_directory(EnteredPath)) {
                 for (const std::filesystem::directory_entry &x:
                         std::filesystem::recursive_directory_iterator{EnteredPath}) {
                     if (x.is_regular_file()) {
@@ -16,16 +14,20 @@ void Scanning::ScanningDirectory(int argc, char **argv) {
                     }
 
                 }
-            } else if(EnteredPath.empty()){
+            } else if (EnteredPath.empty()) {
                 std::cout << "Directory is empty" << std::endl;
             }
+        } else {
+            throw std::invalid_argument("Path doesn't exist");
         }
 
+    } else {
+        throw std::invalid_argument("Wrong arguments");
     }
 }
 
 void Scanning::WorkingWithFile(std::filesystem::path Path) {
-    if(FindExtension(Path.filename().extension().string())) {
+    if (FindExtension(Path.filename().extension().string())) {
         std::string Hash_;
         WorkingWithDB k;
         CreatingHash f;
@@ -37,10 +39,10 @@ void Scanning::WorkingWithFile(std::filesystem::path Path) {
 }
 
 bool Scanning::FindExtension(const std::string &extension) {
-    std::vector<std::string> VectExt{".txt", ".exe",".doc",".xls",".dll",".xlxs",".vbs",".ppt", "docx"};
+    std::vector<std::string> VectExt{".txt", ".exe", ".doc", ".xls", ".dll", ".xlxs", ".vbs", ".ppt", "docx"};
     auto it = VectExt.begin();
-    while(it != VectExt.end()){
-        if(*it == extension){
+    while (it != VectExt.end()) {
+        if (*it == extension) {
             return true;
         }
         ++it;

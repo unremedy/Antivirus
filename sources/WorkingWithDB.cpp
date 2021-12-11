@@ -3,19 +3,16 @@
 
 bool WorkingWithDB::ComparingWithDB(const std::string &Hash) {
     std::fstream file(FindDBFile(), std::ios::in);
-    if(file) {
+    if (file) {
         std::string HashFromFile;
-        for(size_t rowNo = 0; !file.eof(); ++rowNo) {
+        for (size_t rowNo = 0; !file.eof(); ++rowNo) {
             std::getline(file, HashFromFile);
-            if(HashFromFile == Hash){
+            if (HashFromFile == Hash) {
                 return true;
             }
         }
         file.close();
     }
-
-
-
     return false;
 }
 
@@ -25,10 +22,9 @@ std::string WorkingWithDB::FindDBFile() {
     while (path.string() != "/") {
         if (path.string().rfind(Name_repo) + Name_repo.length() ==
             path.string().length()) {
-            for (const std::filesystem::directory_entry& x :
+            for (const std::filesystem::directory_entry &x:
                     std::filesystem::directory_iterator{path}) {
                 if (x.path().string().find("DataBaseFiles") != std::string::npos) {
-//                    std::cout << x.path().string().append("/DataBase.db") << std::endl;
                     return x.path().string().append("/DataBase.db");
                 }
             }
